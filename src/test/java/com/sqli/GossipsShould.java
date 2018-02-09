@@ -18,12 +18,13 @@ public class GossipsShould {
 
 
         assertEquals("Hello",gossips.ask("White"));
-
+        System.out.println(1);
         gossips.spread();
 
         assertEquals("",gossips.ask("White"));
-        assertEquals("Hello",gossips.ask("Black"));
 
+        assertEquals("Hello",gossips.ask("Black"));
+        System.out.println(2);
         gossips.spread();
 
         assertEquals("",gossips.ask("Black"));
@@ -57,8 +58,35 @@ public class GossipsShould {
         assertEquals("",gossips.ask("Blue"));
 
     }
+    @Test
+    public void beRememberedByDoctors() {
 
-   /* @Test
+        Gossips gossips = new Gossips("Mr White", "Mr Black", "Mr Brown",
+                "Mr Pink").from("White").to("Brown").from("Black").to("Brown")
+                .from("Brown").to("Pink");
+
+        gossips.say("Hello").to("White");
+        gossips.say("ByeBye").to("Black");
+
+        gossips.spread();
+
+        System.out.println("1");
+        assertEquals("Hello",gossips.ask("Brown"));
+        assertEquals("",gossips.ask("Pink"));
+
+        gossips.spread();
+        System.out.println(2);
+        assertEquals("Hello, ByeBye",gossips.ask("Brown"));
+        assertEquals("Hello",gossips.ask("Pink"));
+
+        gossips.spread();
+
+        assertEquals("Hello, ByeBye",gossips.ask("Brown"));
+        assertEquals("ByeBye",gossips.ask("Pink"));
+
+    }
+/*
+    @Test
     public void beRememberedByDoctors() {
 
         Gossips gossips = new Gossips("Mr White", "Mr Black", "Dr Brown",
@@ -70,18 +98,19 @@ public class GossipsShould {
 
         gossips.spread();
 
-        assertThat(gossips.ask("Brown")).isEqualTo("Hello");
-        assertThat(gossips.ask("Pink")).isEqualTo("");
+        System.out.println("1");
+        assertEquals("Hello",gossips.ask("Brown"));
+        assertEquals("",gossips.ask("Pink"));
+
+        gossips.spread();
+        System.out.println(2);
+        assertEquals("Hello, ByeBye",gossips.ask("Brown"));
+        assertEquals("Hello",gossips.ask("Pink"));
 
         gossips.spread();
 
-        assertThat(gossips.ask("Brown")).isEqualTo("Hello, ByeBye");
-        assertThat(gossips.ask("Pink")).isEqualTo("Hello");
-
-        gossips.spread();
-
-        assertThat(gossips.ask("Brown")).isEqualTo("Hello, ByeBye");
-        assertThat(gossips.ask("Pink")).isEqualTo("ByeBye");
+        assertEquals("Hello, ByeBye",gossips.ask("Brown"));
+        assertEquals("ByeBye",gossips.ask("Pink"));
 
     }
 

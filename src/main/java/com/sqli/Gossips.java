@@ -6,40 +6,39 @@ import java.util.List;
 public class Gossips {
     int index=0;
     String currentSay;
-    String name1;
-    String name2;
-    String name3;
-    List<Mister> misters;
-    List<String> senders;
 
-    public Gossips(String name1, String name2, String name3) {
-        this.name1 = name1;
-        this.name2 = name2;
-        this.name3 = name3;
-        misters =new ArrayList<Mister>();
+    List<Personne> persons;
+    List<String> senders;
+    String[] names;
+
+    public Gossips(String... names) {
+
+        persons =new ArrayList();
         senders=new ArrayList<String>();
+        this.names=names;
     }
 
     public Gossips from(String name) {
+        for(int i=0;i<names.length;i++) {
+            String temp=names[i].split(" ")[1];
+            if (temp.equals(name))
+                name=names[i];
+        }
         return new GossipsBuilder(this, name).from();
-        /*Mister mister=new Mister(name);
-        senders.add(name);
-        if(findMister(misters,name)==null)
-        misters.add(mister);
-        return this;*/
     }
 
     public Gossips to(String name) {
         if(currentSay!=null){
-            Mister mister=findMister(misters,name);
-            mister.say=currentSay;
+            Personne personne= findPersonne(persons,name);
+            personne.setSay(currentSay);
         }
         else {
+            for(int i=0;i<names.length;i++) {
+                String temp=names[i].split(" ")[1];
+                if (temp.equals(name))
+                    name=names[i];
+            }
             return new GossipsBuilder(this, name).to();
-           /* Mister receptor = new Mister(name);
-            misters.get(misters.size() - 1).receptor = name;
-            if(findMister(misters,name)==null)
-            misters.add(receptor);*/
         }
         return this;
     }
@@ -53,27 +52,45 @@ public class Gossips {
 
 
     public String ask(String name) {
-
-        if(findMister(misters,name)!=null){
-        return findMister(misters,name).say;
-        }
-        return "rien";
+        Personne personne= findPersonne(persons,name);
+        return personne.ask();
     }
 
 
-    public Mister findMister(List<Mister> mistersFrom, String name) {
-        for(Mister m:mistersFrom)
-            if (m.name.equals(name))
+    public Personne findPersonne(List<Personne> mistersFrom, String name) {
+        for(Personne m:mistersFrom)
+            if (m.getName().equals(name))
                 return m;
         return null;
     }
 
-    public void spread() {
+    public void spread1() {
         String senderName=senders.get(index);
-        Mister mister=findMister(misters,senderName);
-        Mister rec=findMister(misters,mister.receptor);
-        rec.say= mister.say;
-        mister.say="";
+        Personne personne= findPersonne(persons,senderName);
+        Personne rec= findPersonne(persons,personne.getReceptor());
+
+        rec.setSay(personne.getSay());
+        if(personne.getType().equals("Mr"))
+            personne.setSay("");
+
         index++;
+    }
+    public void spread(){
+        for(Personne personne:persons){
+            System.out.println(personne.getName()+" => "+personne.getReceptor());
+            personne.setReceived(false);
+        }
+        for(int i=0;i<senders.size();i++){
+            String senderName=senders.get(i);
+            Personne personne= findPersonne(persons,senderName);
+            Personne rec= findPersonne(persons,personne.getReceptor());
+            if(!personne.getSay().equals("") && rec.hasReceaved()==false && personne.hasReceaved()==false){
+                rec.setSay(personne.getSay());
+                personne.setSay("");
+                rec.setReceived(true);
+                personne.setReceived(true);
+            }
+        }
+
     }
 }
