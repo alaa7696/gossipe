@@ -6,9 +6,10 @@ public class Doctor implements Personne{
     public String receptor;
     public String type;
     public boolean receaved;
-    int index;
+    public static int index;
 
     public Doctor(String name) {
+        this.type="Dr";
         this.name = name;
         say="";
         index=0;
@@ -23,12 +24,18 @@ public class Doctor implements Personne{
     }
 
     public void setSay(String say) {
-        System.out.println("dkhoul");
+        StringBuilder stringBuilder=new StringBuilder();
         if(!say.equals("")){
+            if (this.say.equals("")){
+                stringBuilder.append(say);
+            }
 
-        this.say+=", "+say;
+            else
+                stringBuilder.append(this.say+", "+say);
 
+            this.say=new String(stringBuilder);
         }
+
     }
 
     public String getReceptor() {
@@ -39,9 +46,11 @@ public class Doctor implements Personne{
         this.receptor=receptor;
     }
 
-    public String getSay() {
+    public String getSay(String all) {
+        if(all.equals("all"))
+            return say;
         String[] tab=say.split(",");
-        return tab[index++].trim();
+        return tab[index].trim();
     }
 
     public void setType(String type) {

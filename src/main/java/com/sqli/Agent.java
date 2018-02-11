@@ -1,19 +1,16 @@
 package com.sqli;
 
-public class Mister implements Personne{
+public class Agent implements Personne{
     public String name;
     public String say;
     public String receptor;
     public String type;
-    public boolean received;
-
-
-    public Mister(String name) {
-        this.type="Mr";
+    public boolean receaved;
+    public Agent(String name) {
+        this.type="Agent";
         this.name = name;
         say="";
     }
-
     public String ask() {
         return say;
     }
@@ -23,7 +20,16 @@ public class Mister implements Personne{
     }
 
     public void setSay(String say) {
-        this.say=say;
+        StringBuilder stringBuilder=new StringBuilder();
+        if(!say.equals("")) {
+            if (this.say.equals("")) {
+                stringBuilder.append(say);
+            } else
+                stringBuilder.append(this.say + ", " + say);
+
+            this.say = new String(stringBuilder);
+        }
+        else this.say="";
     }
 
     public String getReceptor() {
@@ -35,7 +41,7 @@ public class Mister implements Personne{
     }
 
     public String getSay(String all) {
-        return say;
+        return "";
     }
 
     public void setType(String type) {
@@ -47,11 +53,10 @@ public class Mister implements Personne{
     }
 
     public boolean hasReceaved() {
-        return received;
+        return receaved;
     }
 
     public void setReceived(boolean received) {
-        this.received=received;
+        this.receaved=received;
     }
-
 }

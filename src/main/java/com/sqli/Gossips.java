@@ -6,6 +6,7 @@ import java.util.List;
 public class Gossips {
     int index=0;
     String currentSay;
+    public static Personne lastPerson;
 
     List<Personne> persons;
     List<String> senders;
@@ -64,17 +65,6 @@ public class Gossips {
         return null;
     }
 
-    public void spread1() {
-        String senderName=senders.get(index);
-        Personne personne= findPersonne(persons,senderName);
-        Personne rec= findPersonne(persons,personne.getReceptor());
-
-        rec.setSay(personne.getSay());
-        if(personne.getType().equals("Mr"))
-            personne.setSay("");
-
-        index++;
-    }
     public void spread(){
         for(Personne personne:persons){
             System.out.println(personne.getName()+" => "+personne.getReceptor());
@@ -84,11 +74,20 @@ public class Gossips {
             String senderName=senders.get(i);
             Personne personne= findPersonne(persons,senderName);
             Personne rec= findPersonne(persons,personne.getReceptor());
-            if(!personne.getSay().equals("") && rec.hasReceaved()==false && personne.hasReceaved()==false){
-                rec.setSay(personne.getSay());
+            System.out.println(personne.getName()+" "+personne.getReceptor()+" "+personne.getSay(""));
+            if((!personne.getSay("").equals("") || personne.getType().equals("Agent")) && (rec.hasReceaved()==false || rec.getType().equals("Agent")) && (personne.hasReceaved()==false  || personne.getSay("all").split(" ").length>1)){
+                System.out.println(personne.getName()+"          "+rec.getName());
+                System.out.println(personne.getName()+"     before   "+personne.getSay(""));
+                System.out.println(rec.getName()+" before  "+rec.getSay(""));
+                rec.setSay(personne.getSay(""));
+                if(personne.getType().equals("Dr")){
+                    Doctor.index++;
+                }
                 personne.setSay("");
                 rec.setReceived(true);
                 personne.setReceived(true);
+               // System.out.println(personne.getName()+"     after   "+personne.getSay(""));
+                //System.out.println(rec.getName()+" aafter  "+rec.getSay(""));
             }
         }
 

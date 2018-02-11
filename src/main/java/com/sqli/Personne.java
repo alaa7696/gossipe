@@ -6,9 +6,10 @@ public interface  Personne {
     public void setSay(String say);
     public String getReceptor();
     public void setReceptor(String name);
-    public String getSay();
+    public String getSay(String all);
     public void setType(String type);
     public String getType();
     public boolean hasReceaved();
     public void setReceived(boolean received);
+
 }

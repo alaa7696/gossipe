@@ -58,34 +58,8 @@ public class GossipsShould {
         assertEquals("",gossips.ask("Blue"));
 
     }
-    @Test
-    public void beRememberedByDoctors() {
 
-        Gossips gossips = new Gossips("Mr White", "Mr Black", "Mr Brown",
-                "Mr Pink").from("White").to("Brown").from("Black").to("Brown")
-                .from("Brown").to("Pink");
 
-        gossips.say("Hello").to("White");
-        gossips.say("ByeBye").to("Black");
-
-        gossips.spread();
-
-        System.out.println("1");
-        assertEquals("Hello",gossips.ask("Brown"));
-        assertEquals("",gossips.ask("Pink"));
-
-        gossips.spread();
-        System.out.println(2);
-        assertEquals("Hello, ByeBye",gossips.ask("Brown"));
-        assertEquals("Hello",gossips.ask("Pink"));
-
-        gossips.spread();
-
-        assertEquals("Hello, ByeBye",gossips.ask("Brown"));
-        assertEquals("ByeBye",gossips.ask("Pink"));
-
-    }
-/*
     @Test
     public void beRememberedByDoctors() {
 
@@ -105,6 +79,7 @@ public class GossipsShould {
         gossips.spread();
         System.out.println(2);
         assertEquals("Hello, ByeBye",gossips.ask("Brown"));
+
         assertEquals("Hello",gossips.ask("Pink"));
 
         gossips.spread();
@@ -113,6 +88,7 @@ public class GossipsShould {
         assertEquals("ByeBye",gossips.ask("Pink"));
 
     }
+
 
     @Test
     public void alwaysBeListenedByAnAgent() {
@@ -126,14 +102,16 @@ public class GossipsShould {
 
         gossips.spread();
 
-        assertThat(gossips.ask("Blue")).isEqualTo("");
-        assertThat(gossips.ask("Blue")).isEqualTo("");
-        assertThat(gossips.ask("Pink")).isEqualTo("Hello, Shade");
+        assertEquals("",gossips.ask("Blue"));
+        assertEquals("",gossips.ask("Blue"));
+        assertEquals("Hello, Shade",gossips.ask("Pink"));
 
         gossips.spread();
+        System.out.println(3);
+        assertEquals("",gossips.ask("Pink"));
+        System.out.println(4);
 
-        assertThat(gossips.ask("Pink")).isEqualTo("");
-        assertThat(gossips.ask("Blue")).isEqualTo("");
+        assertEquals("",gossips.ask("Blue"));
     }
 
     @Test
@@ -146,15 +124,16 @@ public class GossipsShould {
 
         gossips.spread();
 
-        assertThat(gossips.ask("Pink")).isEqualTo("Hello");
-        assertThat(gossips.ask("Blue")).isEqualTo("");
+        assertEquals("Hello",gossips.ask("Pink"));
+        assertEquals("",gossips.ask("Blue"));
 
         gossips.spread();
 
-        assertThat(gossips.ask("Pink")).isEqualTo("");
-        assertThat(gossips.ask("Blue")).isEqualTo("");
+        assertEquals("",gossips.ask("Pink"));
+        assertEquals("",gossips.ask("Blue"));
     }
 
+    /*
     @Test
     public void beDelayedOneTurnByAProfessor() {
 
@@ -165,19 +144,20 @@ public class GossipsShould {
 
         gossips.spread();
 
-        assertThat(gossips.ask("Pink")).isEqualTo("Hello");
-        assertThat(gossips.ask("Blue")).isEqualTo("");
+        assertEquals("Hello",gossips.ask("Pink"));
+        assertEquals("",gossips.ask("Blue"));
 
         gossips.spread();
 
-        assertThat(gossips.ask("Pink")).isEqualTo("Hello");
-        assertThat(gossips.ask("Blue")).isEqualTo("");
+        assertEquals("Hello",gossips.ask("Pink"));
+        assertEquals("",gossips.ask("Blue"));
 
         gossips.spread();
 
-        assertThat(gossips.ask("Pink")).isEqualTo("");
-        assertThat(gossips.ask("Blue")).isEqualTo("Hello");
+        assertEquals("",gossips.ask("Pink"));
+        assertEquals("Hello",gossips.ask("Blue"));
     }
+
 
     @Test
     public void bePropagatedByALadyWhenComingFromADoctor() {

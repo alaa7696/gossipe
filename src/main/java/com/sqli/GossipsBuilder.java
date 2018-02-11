@@ -1,6 +1,5 @@
 package com.sqli;
 
-import java.util.function.Predicate;
 
 public class GossipsBuilder {
     Gossips gossips;
@@ -25,12 +24,15 @@ public class GossipsBuilder {
         else if(type.equals("Dr")){
             personne=new Doctor(name);
         }
+        else if(type.equals("Agent"))
+            personne=new Agent(name);
+
         personne.setSay("");
         personne.setReceived(false);
-        personne.setType(type);
         gossips.senders.add(name);
         if(gossips.findPersonne(gossips.persons, name)==null)
             gossips.persons.add(personne);
+        Gossips.lastPerson=gossips.findPersonne(gossips.persons,name);
         return gossips;
     }
     public Gossips to() {
@@ -43,10 +45,13 @@ public class GossipsBuilder {
         else if(type.equals("Dr")){
             personne=new Doctor(name);
         }
-        personne.setType(type);
+
+        else if(type.equals("Agent"))
+            personne=new Agent(name);
         personne.setSay("");
         personne.setReceived(false);
-        gossips.persons.get(gossips.persons.size() - 1).setReceptor(name);
+        Gossips.lastPerson.setReceptor(name);
+        System.out.println("------------"+  Gossips.lastPerson.getName()+"tooooo"+personne.getName());
         if(gossips.findPersonne(gossips.persons, name)==null)
             gossips.persons.add(personne);
         for(Personne personne1:gossips.persons)

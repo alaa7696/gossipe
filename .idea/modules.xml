@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/appli.iml" filepath="$PROJECT_DIR$/appli.iml" />
+      <module fileurl="file://$PROJECT_DIR$/gossipe.iml" filepath="$PROJECT_DIR$/gossipe.iml" />
     </modules>
   </component>
 </project>
